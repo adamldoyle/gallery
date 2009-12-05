@@ -1,0 +1,22 @@
+{% extends "gallery/defaults/gallery.html" %}
+{% load i18n %}
+{% load markup %}
+{% block content %}
+
+{% if galleries %}
+	{% for gallery in galleries %}
+		<div class="gallery_container">
+			{% if gallery.get_main %}
+				<a href="{% url gallery.views.view_gallery gallery.slug %}" class="gallery_link {% cycle 'even' 'odd' %}">
+					<img src="{{ media_url }}{{ gallery.get_main.thumbnail }}" alt="{{ gallery.get_main.description }} " title="{{ gallery.get_main.description }} "/>
+				</a>
+			{% endif %}
+			<h3 class="medium"><a href="{% url gallery.views.view_gallery gallery.slug %}">{{ gallery.name }}</a></h3>
+			<p>{{ gallery.description|markdown }}</p>
+		</div>
+	{% endfor %}
+{% else %}
+	<span class="note">{% trans 'No galleries.' %}</span>
+{% endif %}
+
+{% endblock %}

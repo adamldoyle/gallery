@@ -1,0 +1,56 @@
+{% extends "gallery/defaults/gallery.html" %}
+{% load markup %}
+
+{% block content %}
+
+	{{ gallery.description|markdown }}
+
+	<table class="gallery_viewer">
+		<thead>
+			<tr>
+				<th width="50%">
+					{% if has_prev %}
+						<a href="?p={{ has_prev }}">&lt;&lt; Prev</a>
+					{% endif %}
+				</th>
+				<th width="50%" style="text-align: right;">
+					{% if has_next %}
+						<a href="?p={{ has_next }}">Next &gt;&gt;</a>
+					{% endif %}
+				</th>
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<th>
+					{% if has_prev %}
+						<a href="?p={{ has_prev }}">&lt;&lt; {% trans 'Prev' %}</a>
+					{% endif %}
+				</th>
+				<th style="text-align: right;">
+					{% if has_next %}
+						<a href="?p={{ has_next }}">{% trans 'Next' %} &gt;&gt;</a>
+					{% endif %}
+				</th>
+			</tr>
+		</tfoot>
+		<tbody>
+			<tr>
+				<td colspan="2" style="text-align: center;">
+					{% for image in images %}
+						{% if image.showImage %}
+							<div class="gallery_image_wrap">
+								<a href="{{ media_url }}{{ image.image }}" rel="lightbox[album]" title="{{ image.caption|markdown }}">
+									<img src="{{ media_url }}{{ image.thumbnail }}" alt="{{ image.description }} " title="{{ image.description }} "/>
+								</a><br/>
+							</div>
+						{% else %}
+							<a href="{{ media_url }}{{ image.image }}" rel="lightbox[album]" title="{{ image.caption|markdown }}" style="display: none;">
+						{% endif %}
+					{% endfor %}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "layout/base_site.html" %}
+{% load i18n %}
+
+{% block sectitle %}{% trans 'Galleries' %} |{% endblock %}
+
+{% block gallerytabclass %}active_tab{% endblock %}
+
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" media="screen" href="{{ media_url }}css/galleries.css?version=0.8" />
+{% endblock %}
+
+{% block page_title %}
+	<h2 id="page_title" class="dark">{% if title %}{{ title }}{% else %}{% if object %}{{ object }}{% else %}{% trans 'Galleries' %}{% endif %}{% endif %}</h2>
+	<div class="dark accent"><hr/></div>
+{% endblock %}
+
+{% block leftnav %}
+	<h4 class="light"><a href="{% url gallery.views.default %}">{% trans 'Galleries' %}</a></h4>
+	<div class="accent light"><hr/></div>
+	<ul>
+		{% if photo_galleries %}
+			{% for gallery in photo_galleries %}
+				<li class="dark"><a href="{% url gallery.views.view_gallery gallery.slug %}">{{ gallery.name }}</a></li>
+			{% endfor %}
+		{% else %}
+			<li class="note">{% trans 'No galleries.' %}</li>
+		{% endif %}
+	</ul>
+{% endblock %}
