@@ -15,6 +15,7 @@ class Gallery(SlugMixin):
     
     class Meta:
         ordering = ('created_date',)
+        verbose_name_plural = 'Galleries'
         
     def get_main(self):
         try:
